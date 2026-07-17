@@ -56,3 +56,5 @@ final_prompt=prompt.invoke({"context":context_text,"question":question})
 print(final_prompt)
 
 #generation
+answer=llm.invoke(final_prompt)
+print(answer)
