@@ -4,7 +4,7 @@ from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings,ChatGoogleGenerativeAI
 from langchain_community.vectorstores import FAISS
-
+from langchain_core.prompts import PromptTemplate
 load_dotenv()
 
 google_api_key=os.getenv("gemini_api_key")
@@ -33,4 +33,17 @@ vector_store=FAISS.from_documents(chunks,embeddings)
 #retrieval
 
 retriever = vector_store.as_retriever(search_type="similarity",search_kwargs={"k":4})
-print(retriever.invoke('What is LLM'))
+#print(retriever.invoke('What is LLM'))
+
+llm=ChatGoogleGenerativeAI(model="gemini-2.5-flash",temprature=0.2)
+prompt=PromptTemplate(
+    template=""""
+    You are a helpful assistant.
+    Answer only from provided transciprt context
+    If context is insufficient, just say you don't know
+
+    {context}
+    Question: {question}
+    """,
+    input_variables=['context','question']
+)
