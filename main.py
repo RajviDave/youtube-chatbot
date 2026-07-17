@@ -28,4 +28,5 @@ chunks=splitter.create_documents([transcript])
 embeddings=GoogleGenerativeAIEmbeddings(model="gemini-embedding-2")
 vector_store=FAISS.from_documents(chunks,embeddings)
 
-print(vector_store.index_to_docstore_id)
+#print(vector_store.index_to_docstore_id)
+vector_store.get_by_ids(['78c4335d-1417-434d-ad62-329ba76996a0'])
