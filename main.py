@@ -35,7 +35,7 @@ vector_store=FAISS.from_documents(chunks,embeddings)
 retriever = vector_store.as_retriever(search_type="similarity",search_kwargs={"k":4})
 #print(retriever.invoke('What is LLM'))
 
-llm=ChatGoogleGenerativeAI(model="gemini-2.5-flash",temprature=0.2)
+llm=ChatGoogleGenerativeAI(model="gemini-2.5-flash",temperature=0.2)
 prompt=PromptTemplate(
     template=""""
     You are a helpful assistant.
@@ -52,4 +52,7 @@ question = "Was topic of LLM discussed in video? If yes what was it?"
 retrivered_docs=retriever.invoke(question)
 
 context_text="\n\n".join(doc.page_content for doc in retrivered_docs)
-final_prompt=prompt.invoke()
+final_prompt=prompt.invoke({"context":context_text,"question":question})
+print(final_prompt)
+
+#generation
