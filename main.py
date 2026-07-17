@@ -51,4 +51,5 @@ prompt=PromptTemplate(
 question = "Was topic of LLM discussed in video? If yes what was it?"
 retrivered_docs=retriever.invoke(question)
 
-print(retrivered_docs)
+context_text="\n\n".join(doc.page_content for doc in retrivered_docs)
+final_prompt=prompt.invoke()
