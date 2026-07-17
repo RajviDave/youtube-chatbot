@@ -47,3 +47,8 @@ prompt=PromptTemplate(
     """,
     input_variables=['context','question']
 )
+
+question = "Was topic of LLM discussed in video? If yes what was it?"
+retrivered_docs=retriever.invoke(question)
+
+print(retrivered_docs)
